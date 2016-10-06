@@ -94,17 +94,33 @@ GL gl = drawable.getGL();
 gl.glBegin(GL.GL_TRIANGLES);
 gl.glColor3f(1.0f,0.0f,0.0f);
 
-gl.glVertex3f(-1.0f, 1.0f, -6.0f);
-gl.glVertex3f(-2.0f,-1.0f, -6.0f);
-gl.glVertex3f( 0.0f,-1.0f, -6.0f);
+gl.glVertex3f(-1.0f, 2.0f, -6.0f);
+gl.glVertex3f(-3.0f,1.0f, -6.0f);
+gl.glVertex3f( 1.0f,1.0f, -6.0f);
 gl.glEnd();
+
 gl.glBegin(GL.GL_QUADS);
 gl.glColor3f(1.0f,3.0f,0.0f);
+gl.glVertex3f(-2.9f,1.0f,-6.0f);
+gl.glVertex3f(-2.9f,-1.0f,-6.0f);
+gl.glVertex3f(0.9f,-1.0f,-6.0f);
+gl.glVertex3f(0.9f,1.0f,-6.0f);
+gl.glEnd();
 
-gl.glVertex3f(1.0f,1.0f,-7.0f);
-gl.glVertex3f(2.0f,1.0f,-7.0f);
-gl.glVertex3f(2.0f,-1.0f,-7.0f);
-gl.glVertex3f(1.0f,-1.0f,-7.0f);
+gl.glBegin(GL.GL_QUADS);
+gl.glColor3f(0.4f,0.2f,0.2f);
+gl.glVertex3f(-2.8f,-0.0f,-6.0f);
+gl.glVertex3f(-2.8f,-1.0f,-6.0f);
+gl.glVertex3f(-2.2f,-1.0f,-6.0f);
+gl.glVertex3f(-2.2f,-0.0f,-6.0f);
+gl.glEnd();
+
+gl.glBegin(GL.GL_QUADS);
+gl.glColor3f(0.2f,0.4f,1.0f);
+gl.glVertex3f(0.2f,0.8f,-6.0f);
+gl.glVertex3f(0.2f,0.2f,-6.0f);
+gl.glVertex3f(0.8f,0.2f,-6.0f);
+gl.glVertex3f(0.8f,0.8f,-6.0f);
 gl.glEnd();
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  gl.glFlush();
