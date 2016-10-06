@@ -4,6 +4,7 @@ import com.sun.opengl.util.Animator;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Random;
 import java.util.Scanner;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
@@ -134,7 +135,25 @@ gl.glEnd();*/
 
 
 //kolo(gl,p1,p2,s);
- trojkat(gl,-1,0,1,0,0,1,-6);
+ float x1=-1;
+ float y1=0;
+ float x2=1;
+ float y2=0;
+ float x3=0;
+ float y3=1;
+ Random rd=new Random();
+        
+ for(int i=0;i<2;i++){
+     
+ trojkat(gl,x1,y1,x2,y2,x3,y3,-6,0.1f+i/3,0.1f+i/3,0.1f+i/3);
+ y3=y1;
+ x1=(x3-x1)/2;
+ y1=(y3-y1)/2;
+ x2=(x3-x2)/2;
+ y2=(y3-y2)/2;
+ x3=(x2-x1)/2;
+ 
+ }
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  gl.glFlush();
 }
@@ -158,9 +177,11 @@ gl.glVertex3f(x+p1, y+p2, -6.0f); //kolejne punkty
 }
 gl.glEnd(); 
     }
-    public void trojkat(GL gl, float x1,float y1,float x2, float y2, float x3, float y3, float z)
+    public void trojkat(GL gl, float x1,float y1,float x2, float y2, float x3, float y3, float z,float c1, float c2, float c3)
     {
+        
        gl.glBegin(GL.GL_TRIANGLES);
+       gl.glColor3f(c1,c2,c3);
         gl.glVertex3f(x1, y1, z);
         gl.glVertex3f(x2,y2, z);
         gl.glVertex3f(x3,y3, z);
