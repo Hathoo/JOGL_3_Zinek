@@ -4,6 +4,7 @@ import com.sun.opengl.util.Animator;
 import java.awt.Frame;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Scanner;
 import javax.media.opengl.GL;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
@@ -19,11 +20,17 @@ import javax.media.opengl.glu.GLU;
  * This version is equal to Brian Paul's version 1.2 1999/10/21
  */
 public class Zinek implements GLEventListener {
-
+ static float p1,p2,s;
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
-
+        Scanner sc= new Scanner(System.in);
+System.out.println("Podaj wspolrzedna x:");
+p1=sc.nextFloat();
+System.out.println("Podaj wspolrzedna y:");
+p2=sc.nextFloat();
+System.out.println("Podaj srednice:");
+s=sc.nextFloat();
         canvas.addGLEventListener(new Zinek());
         frame.add(canvas);
         frame.setSize(640, 480);
@@ -88,6 +95,7 @@ GL gl = drawable.getGL();
 //Czyszczenie przestrzeni 3D przed utworzeniem kolejnej klatki
  gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
  //Resetowanie macierzy transformacji
+ 
  gl.glLoadIdentity();
 
 // Tu piszemy kod rysuj¹cy grafikê 3D
@@ -123,17 +131,9 @@ gl.glVertex3f(0.8f,0.2f,-6.0f);
 gl.glVertex3f(0.8f,0.8f,-6.0f);
 gl.glEnd();*/
 
-float x,y,kat;
-gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
-for(kat = 0.0f; kat < (2.0f*Math.PI);
-kat+=(Math.PI/32.0f))
-{
-x = 2.5f*(float)Math.sin(kat);
-y = 2.5f*(float)Math.cos(kat);
-gl.glVertex3f(x, y, -6.0f); //kolejne punkty
-}
-gl.glEnd();
+
+
+kolo(gl,p1,p2,s);
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  gl.glFlush();
 }
@@ -141,5 +141,22 @@ gl.glEnd();
 
     public void displayChanged(GLAutoDrawable drawable, boolean modeChanged, boolean deviceChanged) {
     }
+    public void kolo(GL gl, float p1, float p2, float s)
+    {
+      
+        gl.glBegin(GL.GL_TRIANGLE_FAN);
+float x,y,kat;
+
+gl.glVertex3f(p1,p2,-6.0f); //œrodek
+for(kat = 0.0f; kat < (2.0f*Math.PI);
+kat+=(Math.PI/32.0f))
+{
+x = s/2*(float)Math.sin(kat);
+y = s/2*(float)Math.cos(kat);
+gl.glVertex3f(x+p1, y+p2, -6.0f); //kolejne punkty
+}
+gl.glEnd(); 
+    }
+    
 }
 
