@@ -92,11 +92,15 @@ GL gl = drawable.getGL();
 
 // Tu piszemy kod rysuj¹cy grafikê 3D
 gl.glBegin(GL.GL_TRIANGLES);
+gl.glColor3f(1.0f,0.0f,0.0f);
+
 gl.glVertex3f(-1.0f, 1.0f, -6.0f);
 gl.glVertex3f(-2.0f,-1.0f, -6.0f);
 gl.glVertex3f( 0.0f,-1.0f, -6.0f);
 gl.glEnd();
 gl.glBegin(GL.GL_QUADS);
+gl.glColor3f(1.0f,3.0f,0.0f);
+
 gl.glVertex3f(1.0f,1.0f,-7.0f);
 gl.glVertex3f(2.0f,1.0f,-7.0f);
 gl.glVertex3f(2.0f,-1.0f,-7.0f);
