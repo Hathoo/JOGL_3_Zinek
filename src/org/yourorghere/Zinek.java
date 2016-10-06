@@ -24,13 +24,13 @@ public class Zinek implements GLEventListener {
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
-        Scanner sc= new Scanner(System.in);
+       /* Scanner sc= new Scanner(System.in);
 System.out.println("Podaj wspolrzedna x:");
 p1=sc.nextFloat();
 System.out.println("Podaj wspolrzedna y:");
 p2=sc.nextFloat();
 System.out.println("Podaj srednice:");
-s=sc.nextFloat();
+s=sc.nextFloat();*/
         canvas.addGLEventListener(new Zinek());
         frame.add(canvas);
         frame.setSize(640, 480);
@@ -133,7 +133,8 @@ gl.glEnd();*/
 
 
 
-kolo(gl,p1,p2,s);
+//kolo(gl,p1,p2,s);
+ trojkat(gl,-1,0,1,0,0,1,-6);
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  gl.glFlush();
 }
@@ -157,6 +158,13 @@ gl.glVertex3f(x+p1, y+p2, -6.0f); //kolejne punkty
 }
 gl.glEnd(); 
     }
-    
+    public void trojkat(GL gl, float x1,float y1,float x2, float y2, float x3, float y3, float z)
+    {
+       gl.glBegin(GL.GL_TRIANGLES);
+        gl.glVertex3f(x1, y1, z);
+        gl.glVertex3f(x2,y2, z);
+        gl.glVertex3f(x3,y3, z);
+        gl.glEnd(); 
+    }
 }
 
