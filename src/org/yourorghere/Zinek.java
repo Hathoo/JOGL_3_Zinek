@@ -288,7 +288,7 @@ gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 }
 gl.glEnd();*/
  
-float xx,yy,katt;
+/*float xx,yy,katt;
 gl.glBegin(GL.GL_TRIANGLE_FAN);
 gl.glColor3f(1.0f,0.0f,0.0f);
 gl.glVertex3f(0.0f,2.0f,0.0f); //œrodek
@@ -311,7 +311,66 @@ xxx = 1.0f*(float)Math.sin(kattt);
 yyy = 1.0f*(float)Math.cos(kattt);
 gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 }
+gl.glEnd();*/
+ float xx,yy,katt,sr=2.0f,xr=0.0f,yr=0.0f;
+ for(int z=0;z<6;z++)
+{
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glColor3f(1.0f,0.0f,0.0f);
+
+gl.glVertex3f(xr,sr,yr); //œrodek
+for(katt = (float) (2.0f*Math.PI); katt >0.0f ;
+katt-=(Math.PI/32.0f))
+{
+xx =0.20f*(float)Math.sin(katt);
+yy = 0.20f*(float)Math.cos(katt);
+if(sr!=0)
+gl.glVertex3f(xx, 0.0f, yy);
+else
+if(xr!=0)
+gl.glVertex3f(0.0f,xx, yy);
+else
+if(yr!=0)
+gl.glVertex3f(xx, yy, 0.0f);
+//kolejne punkty
+}
+if(sr==0&&xr==0&&yr==2){
+   
+
+    sr=0;
+    xr=0;
+    yr=-2;
+
+}
+if(sr==0&&xr==-2){
+   
+
+    sr=0;
+    xr=0;
+    yr=2;
+
+}
+if(sr==0&&xr==2){
+   
+
+    sr=0;
+    xr=-2;
+
+}
+if(sr==-2){
+   
+
+    sr=0;
+    xr=2;
+
+}
+if(sr==2.0f){
+    sr=-2.0f;
+   
+}
+
 gl.glEnd();
+}
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  gl.glFlush();
 }
