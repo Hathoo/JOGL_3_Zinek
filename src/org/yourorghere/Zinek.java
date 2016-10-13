@@ -2,6 +2,8 @@ package org.yourorghere;
 
 import com.sun.opengl.util.Animator;
 import java.awt.Frame;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
@@ -21,7 +23,7 @@ import javax.media.opengl.glu.GLU;
  * This version is equal to Brian Paul's version 1.2 1999/10/21
  */
 public class Zinek implements GLEventListener {
- static float p1,p2,s;
+ private static float xrot = 0.0f, yrot = 0.0f;
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
@@ -52,6 +54,23 @@ s=sc.nextFloat();*/
                 }).start();
             }
         });
+        frame.addKeyListener(new KeyListener()
+ {
+ public void keyPressed(KeyEvent e)
+ {
+ if(e.getKeyCode() == KeyEvent.VK_UP)
+ xrot -= 1.0f;
+ if(e.getKeyCode() == KeyEvent.VK_DOWN)
+ xrot +=1.0f;
+ if(e.getKeyCode() == KeyEvent.VK_RIGHT)
+ yrot += 1.0f;
+ if(e.getKeyCode() == KeyEvent.VK_LEFT)
+ yrot -=1.0f;
+ }
+ public void keyReleased(KeyEvent e){}
+ public void keyTyped(KeyEvent e){}
+ });
+
         // Center frame
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
@@ -70,7 +89,8 @@ s=sc.nextFloat();*/
 
         // Setup the drawing area and shading mode
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-        gl.glShadeModel(GL.GL_SMOOTH); // try setting this to GL_FLAT and see what happens.
+        gl.glShadeModel(GL.GL_SMOOTH); 
+gl.glEnable(GL.GL_CULL_FACE);// try setting this to GL_FLAT and see what happens.
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -98,6 +118,10 @@ GL gl = drawable.getGL();
  //Resetowanie macierzy transformacji
  
  gl.glLoadIdentity();
+ gl.glTranslatef(0.0f, 0.0f, -6.0f); //przesuniêcie o 6 jednostek
+ gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); //rotacja wokó³ osi X
+ gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); //rotacja wokó³ osi Y
+
 
 // Tu piszemy kod rysuj¹cy grafikê 3D
 /*gl.glBegin(GL.GL_TRIANGLES);
@@ -135,7 +159,7 @@ gl.glEnd();*/
 
 
 //kolo(gl,p1,p2,s);
- float x1=-1;
+/* float x1=-1;
  float y1=0;
  float x2=1;
  float y2=0;
@@ -153,7 +177,48 @@ gl.glEnd();*/
  y2=(y3-y2)/2;
  x3=(x2-x1)/2;
  
- }
+ }*/
+ gl.glBegin(GL.GL_QUADS);
+//œciana górna
+ gl.glColor3f(0.0f, 1.0f, 0.0f);    
+      gl.glVertex3f( 1.0f, 1.0f, -1.0f);
+      gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+      gl.glVertex3f(-1.0f, 1.0f,  1.0f);
+      gl.glVertex3f( 1.0f, 1.0f,  1.0f);
+      
+      //sciana przednia
+gl.glColor3f(1.0f,0.0f,0.0f);
+gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glVertex3f(1.0f,1.0f,1.0f);
+gl.glVertex3f(-1.0f,1.0f,1.0f);
+//sciana tylnia
+gl.glColor3f(0.0f,1.0f,0.0f);
+gl.glVertex3f(-1.0f,1.0f,-1.0f);
+gl.glVertex3f(1.0f,1.0f,-1.0f);
+gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+//œciana lewa
+gl.glColor3f(0.0f,0.0f,1.0f);
+gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glVertex3f(-1.0f,1.0f,1.0f);
+gl.glVertex3f(-1.0f,1.0f,-1.0f);
+//œciana prawa
+gl.glColor3f(1.0f,1.0f,0.0f);
+gl.glVertex3f(1.0f,1.0f,-1.0f);
+gl.glVertex3f(1.0f,1.0f,1.0f);
+gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glVertex3f(1.0f,-1.0f,-1.0f);
+//œciana dolna
+gl.glColor3f(1.0f,0.0f,1.0f);
+gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glEnd();
+
+
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  gl.glFlush();
 }
