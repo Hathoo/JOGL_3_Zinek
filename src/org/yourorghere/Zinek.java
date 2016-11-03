@@ -283,7 +283,7 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 
 gl.glEnd();*/
 //ostroslup\/
-gl.glBegin(GL.GL_QUADS);
+/*gl.glBegin(GL.GL_QUADS);
 gl.glColor3f(1.0f,0.0f,1.0f);
 gl.glNormal3f(0.0f,1.0f,0.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
@@ -323,6 +323,7 @@ gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 
 
+
 gl.glColor3f(1.0f,1.0f,0.0f);
 float[] scianka4={1.0f, -1.0f, 1.0f, //wpó³rzêdne pierwszego punktu
                     1.0f, -1.0f, -1.0f, //wspó³rzêdne drugiego punktu
@@ -333,9 +334,10 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 gl.glEnd();
-
+*/
  
-/*float x,y,kat;
+//walec\/
+float x,y,kat;
 gl.glBegin(GL.GL_QUAD_STRIP);
 //gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
 gl.glColor3f(1.0f,1.0f,0.0f);
@@ -344,6 +346,7 @@ kat+=(Math.PI/32.0f))
 {
 x = 1.0f*(float)Math.sin(kat);
 y = 1.0f*(float)Math.cos(kat);
+gl.glNormal3f(x,y,0f);
 gl.glVertex3f(x, 2.0f, y);
 gl.glVertex3f(x, -2.0f, y);//kolejne punkty
 }
@@ -358,6 +361,7 @@ katt+=(Math.PI/32.0f))
 {
 xx = 1.0f*(float)Math.sin(katt);
 yy = 1.0f*(float)Math.cos(katt);
+gl.glNormal3f(xx,yy,0f);
 gl.glVertex3f(xx, 2.0f, yy); //kolejne punkty
 }
 gl.glEnd();
@@ -371,9 +375,10 @@ kattt-=(Math.PI/32.0f))
 {
 xxx = 1.0f*(float)Math.sin(kattt);
 yyy = 1.0f*(float)Math.cos(kattt);
+gl.glNormal3f(xxx,yyy,0f);
 gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 }
-gl.glEnd();*/
+gl.glEnd();
  
 /*float xx,yy,katt;
 gl.glBegin(GL.GL_TRIANGLE_FAN);
