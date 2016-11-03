@@ -379,6 +379,50 @@ gl.glNormal3f(xxx,yyy,0f);
 gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 }
 gl.glEnd();
+
+
+
+gl.glBegin(GL.GL_QUAD_STRIP);
+//gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
+gl.glColor3f(1.0f,1.0f,0.0f);
+for(kat = 0.0f; kat < (2.0f*Math.PI);
+kat+=(Math.PI/32.0f))
+{
+x = 1.0f*(float)Math.sin(kat);
+y = 1.0f*(float)Math.cos(kat);
+gl.glNormal3f(x+4,y,0f);
+gl.glVertex3f(x+4, 2.0f, y);
+gl.glVertex3f(x+4, -2.0f, y);//kolejne punkty
+}
+gl.glEnd();
+
+
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glColor3f(1.0f,0.0f,0.0f);
+gl.glVertex3f(4.0f,2.0f,0.0f); //œrodek
+for(katt = 0.0f; katt < (2.0f*Math.PI);
+katt+=(Math.PI/32.0f))
+{
+xx = 1.0f*(float)Math.sin(katt);
+yy = 1.0f*(float)Math.cos(katt);
+gl.glNormal3f(xx+4,yy,0f);
+gl.glVertex3f(xx+4, 2.0f, yy); //kolejne punkty
+}
+gl.glEnd();
+
+
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glColor3f(0.0f,1.0f,0.0f);
+gl.glVertex3f(4.0f,-2.0f,0.0f); //œrodek
+for(kattt = (float) (2.0f*Math.PI); kattt > 0.0f;
+kattt-=(Math.PI/32.0f))
+{
+xxx = 1.0f*(float)Math.sin(kattt);
+yyy = 1.0f*(float)Math.cos(kattt);
+gl.glNormal3f(xxx+4,yyy,0f);
+gl.glVertex3f(xxx+4, -2.0f, yyy); //kolejne punkty
+}
+gl.glEnd();
  
 /*float xx,yy,katt;
 gl.glBegin(GL.GL_TRIANGLE_FAN);
