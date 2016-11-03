@@ -30,7 +30,9 @@ public class Zinek implements GLEventListener {
  public static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczajšce
 public static float diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
 public static float specular[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
-public static float lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
+public static float lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };
+public static float lightPos2[] = { 0.0f, 150.0f, -150.0f, 1.0f };
+public static float direction[]={0,0,0};//pozycja ?wiat?a
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
@@ -125,8 +127,17 @@ gl.glEnable(GL.GL_LIGHTING); //uaktywnienie oœwietlenia
 gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat³o otaczaj¹ce
 gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE,diffuseLight,0); //œwiat³o rozproszone
 gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //œwiat³o odbite
-gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja œwiat³a
-gl.glEnable(GL.GL_LIGHT0); //uaktywnienie Ÿród³a œwiat³a nr. 0
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0);
+gl.glLightfv( GL.GL_LIGHT0, GL.GL_SPOT_DIRECTION, direction ,0);
+gl.glLightf( GL.GL_LIGHT0, GL.GL_SPOT_EXPONENT, 1.0f );
+gl.glLightf( GL.GL_LIGHT0, GL.GL_SPOT_CUTOFF, 1.0f);//pozycja œwiat³a
+gl.glEnable(GL.GL_LIGHT0);
+
+gl.glLightfv(GL.GL_LIGHT1,GL.GL_AMBIENT,ambientLight,0); //swiat³o otaczaj¹ce
+gl.glLightfv(GL.GL_LIGHT1,GL.GL_DIFFUSE,diffuseLight,0); //œwiat³o rozproszone
+gl.glLightfv(GL.GL_LIGHT1,GL.GL_SPECULAR,specular,0); //œwiat³o odbite
+gl.glLightfv(GL.GL_LIGHT1,GL.GL_POSITION,lightPos2,0); //pozycja œwiat³a
+gl.glEnable(GL.GL_LIGHT1);//uaktywnienie Ÿród³a œwiat³a nr. 0
 gl.glEnable(GL.GL_COLOR_MATERIAL); //uaktywnienie œledzenia kolorów
 //kolory bêd¹ ustalane za pomoc¹ glColor
 gl.glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE);
