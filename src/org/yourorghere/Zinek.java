@@ -9,6 +9,9 @@ import java.awt.event.WindowEvent;
 import java.util.Random;
 import java.util.Scanner;
 import javax.media.opengl.GL;
+import static javax.media.opengl.GL.GL_FRONT;
+import static javax.media.opengl.GL.GL_SHININESS;
+import static javax.media.opengl.GL.GL_SPECULAR;
 import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLEventListener;
@@ -24,6 +27,10 @@ import javax.media.opengl.glu.GLU;
  */
 public class Zinek implements GLEventListener {
  private static float xrot = 0.0f, yrot = 0.0f;
+ public static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczajšce
+public static float diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
+public static float specular[] = { 1.0f, 1.0f, 1.0f, 1.0f}; //?wiat?o odbite
+public static float lightPos[] = { 0.0f, 150.0f, 150.0f, 1.0f };//pozycja ?wiat?a
     public static void main(String[] args) {
         Frame frame = new Frame("Simple JOGL Application");
         GLCanvas canvas = new GLCanvas();
@@ -56,6 +63,7 @@ s=sc.nextFloat();*/
         });
         frame.addKeyListener(new KeyListener()
  {
+           
  public void keyPressed(KeyEvent e)
  {
  if(e.getKeyCode() == KeyEvent.VK_UP)
@@ -66,6 +74,22 @@ s=sc.nextFloat();*/
  yrot += 1.0f;
  if(e.getKeyCode() == KeyEvent.VK_LEFT)
  yrot -=1.0f;
+if(e.getKeyChar() == 'q')
+    ambientLight = new float[]{ambientLight[0]+0.1f, ambientLight[0]+0.1f, ambientLight[0]+0.1f,1.0f};
+if(e.getKeyChar() == 'w')
+    ambientLight = new float[]{ambientLight[0]+0.1f, ambientLight[0]+0.1f, ambientLight[0]+0.1f,1.0f};
+if(e.getKeyChar() == 'a')
+    diffuseLight = new float[]{diffuseLight[0]-0.1f, diffuseLight[0]-0.1f, diffuseLight[0]-0.1f,1.0f};
+if(e.getKeyChar() == 's')
+    diffuseLight = new float[]{diffuseLight[0]+0.1f, diffuseLight[0]+0.1f, diffuseLight[0]+0.1f,1.0f};
+if(e.getKeyChar() == 'z')
+    specular = new float[]{specular[0]-0.1f, specular[0]-0.1f, specular[0]-0.1f};
+if(e.getKeyChar() == 'x')
+    specular = new float[]{specular[0]+0.1f, specular[0]+0.1f, specular[0]+0.1f};
+if(e.getKeyChar() == 'e')
+    lightPos = new float[]{lightPos[0]-0.1f, lightPos[0]-0.1f, lightPos[0]-0.1f};
+if(e.getKeyChar() == 'r')
+    lightPos = new float[]{lightPos[0]+0.1f, lightPos[0]+0.1f, lightPos[0]+0.1f};
  }
  public void keyReleased(KeyEvent e){}
  public void keyTyped(KeyEvent e){}
@@ -91,6 +115,27 @@ s=sc.nextFloat();*/
         gl.glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
         gl.glShadeModel(GL.GL_SMOOTH); 
 gl.glEnable(GL.GL_CULL_FACE);// try setting this to GL_FLAT and see what happens.
+//wartoœci sk³adowe oœwietlenia i koordynaty Ÿród³a œwiat³a
+
+
+//(czwarty parametr okreœla odleg³oœæ Ÿród³a:
+//0.0f-nieskoñczona; 1.0f-okreœlona przez pozosta³e parametry)
+gl.glEnable(GL.GL_LIGHTING); //uaktywnienie oœwietlenia
+//ustawienie parametrów Ÿród³a œwiat³a nr. 0
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat³o otaczaj¹ce
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE,diffuseLight,0); //œwiat³o rozproszone
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0); //œwiat³o odbite
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_POSITION,lightPos,0); //pozycja œwiat³a
+gl.glEnable(GL.GL_LIGHT0); //uaktywnienie Ÿród³a œwiat³a nr. 0
+gl.glEnable(GL.GL_COLOR_MATERIAL); //uaktywnienie œledzenia kolorów
+//kolory bêd¹ ustalane za pomoc¹ glColor
+gl.glColorMaterial(GL.GL_FRONT, GL.GL_AMBIENT_AND_DIFFUSE);
+//Ustawienie jasnoœci i odblaskowoœci obiektów
+float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
+        gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR,specref,0);
+        
+        gl.glMateriali(GL.GL_FRONT,GL.GL_SHININESS,128);
+
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -121,6 +166,9 @@ GL gl = drawable.getGL();
  gl.glTranslatef(0.0f, 0.0f, -6.0f); //przesuniêcie o 6 jednostek
  gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); //rotacja wokó³ osi X
  gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); //rotacja wokó³ osi Y
+ gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat³o otaczaj¹ce
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_DIFFUSE,diffuseLight,0); //œwiat³o rozproszone
+gl.glLightfv(GL.GL_LIGHT0,GL.GL_SPECULAR,specular,0);
 
 
 // Tu piszemy kod rysuj¹cy grafikê 3D
@@ -178,47 +226,66 @@ gl.glEnd();*/
  x3=(x2-x1)/2;
  
  }*/
-/* gl.glBegin(GL.GL_QUADS);
+/*
+//szescian\/
+ gl.glBegin(GL.GL_QUADS);
 //œciana górna
- gl.glColor3f(0.0f, 1.0f, 0.0f);    
+ gl.glColor3f(0.0f, 1.0f, 0.0f);   
+ gl.glNormal3f(0.0f,1.0f,0.0f);
       gl.glVertex3f( 1.0f, 1.0f, -1.0f);
       gl.glVertex3f(-1.0f, 1.0f, -1.0f);
       gl.glVertex3f(-1.0f, 1.0f,  1.0f);
       gl.glVertex3f( 1.0f, 1.0f,  1.0f);
       
+      
+      
       //sciana przednia
-gl.glColor3f(1.0f,0.0f,0.0f);
+ gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glNormal3f(0.0f,0.0f,1.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,1.0f,1.0f);
 gl.glVertex3f(-1.0f,1.0f,1.0f);
+
 //sciana tylnia
-gl.glColor3f(0.0f,1.0f,0.0f);
+ gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glNormal3f(0.0f,0.0f,1.0f);
 gl.glVertex3f(-1.0f,1.0f,-1.0f);
 gl.glVertex3f(1.0f,1.0f,-1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+
 //œciana lewa
-gl.glColor3f(0.0f,0.0f,1.0f);
+ gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glNormal3f(1.0f,0.0f,0.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(-1.0f,1.0f,1.0f);
 gl.glVertex3f(-1.0f,1.0f,-1.0f);
+
+
+
 //œciana prawa
-gl.glColor3f(1.0f,1.0f,0.0f);
+ gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glNormal3f(1.0f,0.0f,0.0f);
 gl.glVertex3f(1.0f,1.0f,-1.0f);
 gl.glVertex3f(1.0f,1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
+
 //œciana dolna
-gl.glColor3f(1.0f,0.0f,1.0f);
+ gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glNormal3f(0.0f,1.0f,0.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
+
 gl.glEnd();*/
-/*gl.glBegin(GL.GL_QUADS);
+//ostroslup\/
+gl.glBegin(GL.GL_QUADS);
 gl.glColor3f(1.0f,0.0f,1.0f);
+gl.glNormal3f(0.0f,1.0f,0.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
@@ -226,26 +293,46 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glEnd();
 gl.glBegin(GL.GL_TRIANGLES);
 gl.glColor3f(1.0f,0.0f,0.0f);
+float[] scianka1={-1.0f, -1.0f, 1.0f, //wpó³rzêdne pierwszego punktu
+                    1.0f, -1.0f, 1.0f, //wspó³rzêdne drugiego punktu
+ 0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
+float[] normalna1 = WyznaczNormalna(scianka1,0,3,6);
+gl.glNormal3fv(normalna1,0);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 
 gl.glColor3f(0.0f,1.0f,0.0f);
+float[] scianka2={1.0f, -1.0f, -1.0f, //wpó³rzêdne pierwszego punktu
+                    -1.0f, -1.0f, -1.0f, //wspó³rzêdne drugiego punktu
+                    0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
+float[] normalna2 = WyznaczNormalna(scianka1,0,3,6);
+gl.glNormal3fv(normalna2,0);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 
 gl.glColor3f(0.0f,0.0f,1.0f);
+float[] scianka3={-1.0f, -1.0f, -1.0f, //wpó³rzêdne pierwszego punktu
+                    -1.0f, -1.0f, 1.0f, //wspó³rzêdne drugiego punktu
+                    0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
+float[] normalna3 = WyznaczNormalna(scianka1,0,3,6);
+gl.glNormal3fv(normalna3,0);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 
 
 gl.glColor3f(1.0f,1.0f,0.0f);
+float[] scianka4={1.0f, -1.0f, 1.0f, //wpó³rzêdne pierwszego punktu
+                    1.0f, -1.0f, -1.0f, //wspó³rzêdne drugiego punktu
+                    0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
+float[] normalna4 = WyznaczNormalna(scianka1,0,3,6);
+gl.glNormal3fv(normalna4,0);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
-gl.glEnd();*/
+gl.glEnd();
 
  
 /*float x,y,kat;
@@ -312,7 +399,10 @@ yyy = 1.0f*(float)Math.cos(kattt);
 gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 }
 gl.glEnd();*/
- float xx,yy,katt,sr=2.0f,xr=0.0f,yr=0.0f;
+ 
+ 
+/*Kolczatka \/
+        float xx,yy,katt,sr=2.0f,xr=0.0f,yr=0.0f;
  for(int z=0;z<6;z++)
 {
 gl.glBegin(GL.GL_TRIANGLE_FAN);
@@ -372,7 +462,7 @@ if(sr==2.0f){
 gl.glEnd();
 }
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
- gl.glFlush();
+ gl.glFlush();*/
 }
 
 
@@ -404,5 +494,31 @@ gl.glEnd();
         gl.glVertex3f(x3,y3, z);
         gl.glEnd(); 
     }
+    
+    private float[] WyznaczNormalna(float[] punkty, int ind1, int ind2, int ind3)
+{
+ float[] norm = new float[3];
+ float[] wektor0 = new float[3];
+ float[] wektor1 = new float[3];
+
+ for(int i=0;i<3;i++)
+ {
+ wektor0[i]=punkty[i+ind1]-punkty[i+ind2];
+ wektor1[i]=punkty[i+ind2]-punkty[i+ind3];
+ }
+
+ norm[0]=wektor0[1]*wektor1[2]-wektor0[2]*wektor1[1];
+ norm[1]=wektor0[2]*wektor1[0]-wektor0[0]*wektor1[2];
+ norm[2]=wektor0[0]*wektor1[1]-wektor0[1]*wektor1[0];
+ float d=
+(float)Math.sqrt((norm[0]*norm[0])+(norm[1]*norm[1])+ (norm[2]*norm[2]) );
+ if(d==0.0f)
+ d=1.0f;
+ norm[0]/=d;
+ norm[1]/=d;
+ norm[2]/=d;
+
+ return norm;
+}
 }
 
