@@ -162,11 +162,25 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
         glu.gluPerspective(45.0f, h, 1.0, 200.0);
-        
+        gl.glViewport(200, 200, 100, 100);
+
+           /*     float ilor;
+if(width<=height)
+{
+ilor = height/width;
+gl.glOrtho(-10.0f,10.0f,-10.0f*ilor,10.0f*ilor,-10.0f,10.0f);
+}
+else
+{
+ilor = width/height;
+ gl.glOrtho(-10.0f*ilor,10.0f*ilor,-10.0f,10.0f,-10.0f,10.0f);
+}
+
+    */
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
-    }
 
+    }
     public void display(GLAutoDrawable drawable) {
 //Tworzenie obiektu
 GL gl = drawable.getGL();
