@@ -146,7 +146,7 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         gl.glMaterialfv(GL.GL_FRONT, GL.GL_SPECULAR,specref,0);
         
         gl.glMateriali(GL.GL_FRONT,GL.GL_SHININESS,128);
-
+        gl.glEnable(GL.GL_DEPTH_TEST);
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -161,7 +161,8 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(45.0f, h, 1.0, 20.0);
+        glu.gluPerspective(45.0f, h, 1.0, 200.0);
+        
         gl.glMatrixMode(GL.GL_MODELVIEW);
         gl.glLoadIdentity();
     }
@@ -172,9 +173,9 @@ GL gl = drawable.getGL();
 //Czyszczenie przestrzeni 3D przed utworzeniem kolejnej klatki
  gl.glClear(GL.GL_COLOR_BUFFER_BIT | GL.GL_DEPTH_BUFFER_BIT);
  //Resetowanie macierzy transformacji
- 
+
  gl.glLoadIdentity();
- gl.glTranslatef(0.0f, 0.0f, -6.0f); //przesuniêcie o 6 jednostek
+ gl.glTranslatef(0.0f, 0.0f, -16.0f); //przesuniêcie o 6 jednostek
  gl.glRotatef(xrot, 1.0f, 0.0f, 0.0f); //rotacja wokó³ osi X
  gl.glRotatef(yrot, 0.0f, 1.0f, 0.0f); //rotacja wokó³ osi Y
  gl.glLightfv(GL.GL_LIGHT0,GL.GL_AMBIENT,ambientLight,0); //swiat³o otaczaj¹ce
@@ -348,6 +349,7 @@ gl.glEnd();
 */
  
 //walec\/
+/*
 float x,y,kat;
 gl.glBegin(GL.GL_QUAD_STRIP);
 //gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
@@ -434,7 +436,7 @@ gl.glNormal3f(xxx+4,yyy,0f);
 gl.glVertex3f(xxx+4, -2.0f, yyy); //kolejne punkty
 }
 gl.glEnd();
- 
+ */
 /*float xx,yy,katt;
 gl.glBegin(GL.GL_TRIANGLE_FAN);
 gl.glColor3f(1.0f,0.0f,0.0f);
@@ -520,9 +522,56 @@ if(sr==2.0f){
 }
 
 gl.glEnd();
-}
+}*/
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
- gl.glFlush();*/
+ 
+
+
+gl.glRotatef(90f, 1, 0, 0);
+for(int iiii=0;iiii<10;iiii++)
+{
+    gl.glPushMatrix();
+   
+    gl.glTranslatef(iiii*2, -iiii*2, 0);
+    
+gl.glColor3f(0.0f, 0.4f, 0.0f);
+stozek(gl);
+gl.glTranslatef(0, 0, 1);
+gl.glScalef(1.2f, 1.2f, 1.2f);
+stozek(gl);
+gl.glTranslatef(0, 0, 1);
+gl.glScalef(1.2f, 1.2f, 1.2f);
+stozek(gl);
+gl.glTranslatef(0, 0, 0.5f);
+gl.glColor3f(0.139f, 0.063f, 0.019f);
+gl.glScalef(0.3f, 0.3f, 0.6f);
+walec(gl);
+ gl.glPopMatrix();
+ gl.glEnd();
+}
+for(int iiii=0;iiii<10;iiii++)
+{
+    gl.glPushMatrix();
+   
+    gl.glTranslatef(iiii*2+3, -iiii*2+3, 0);
+    
+gl.glColor3f(0.0f, 0.4f, 0.0f);
+stozek(gl);
+gl.glTranslatef(0, 0, 1);
+gl.glScalef(1.2f, 1.2f, 1.2f);
+stozek(gl);
+gl.glTranslatef(0, 0, 1);
+gl.glScalef(1.2f, 1.2f, 1.2f);
+stozek(gl);
+gl.glTranslatef(0, 0, 0.5f);
+gl.glColor3f(0.139f, 0.063f, 0.019f);
+gl.glScalef(0.3f, 0.3f, 0.6f);
+walec(gl);
+ gl.glPopMatrix();
+ gl.glEnd();
+}
+ 
+gl.glFlush();
 }
 
 
@@ -554,7 +603,73 @@ gl.glEnd();
         gl.glVertex3f(x3,y3, z);
         gl.glEnd(); 
     }
-    
+    void walec(GL gl)
+ {
+//wywo³ujemy automatyczne normalizowanie normalnych
+//bo operacja skalowania je zniekszta³ci
+gl.glEnable(GL.GL_NORMALIZE);
+float x,y,kat;
+gl.glBegin(GL.GL_QUAD_STRIP);
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),0.0f);
+gl.glVertex3f(x, y, -1.0f);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+gl.glNormal3f(0.0f,0.0f,-1.0f);
+x=y=kat=0.0f;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, -1.0f); //srodek kola
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, y, -1.0f);
+}
+gl.glEnd();
+gl.glNormal3f(0.0f,0.0f,1.0f);
+x=y=kat=0.0f;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
+for(kat = 2.0f*(float)Math.PI; kat > 0.0f ; kat -= (Math.PI/32.0f))
+{
+x = 0.5f*(float)Math.sin(kat);
+y = 0.5f*(float)Math.cos(kat);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+}
+
+void stozek(GL gl)
+{
+//wywo³ujemy automatyczne normalizowanie normalnych
+gl.glEnable(GL.GL_NORMALIZE);
+float x,y,kat;
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glVertex3f(0.0f, 0.0f, -2.0f); //wierzcholek stozka
+for(kat = 0.0f; kat < (2.0f*Math.PI); kat += (Math.PI/32.0f))
+{
+x = (float)Math.sin(kat);
+y = (float)Math.cos(kat);
+gl.glNormal3f((float)Math.sin(kat),(float)Math.cos(kat),-2.0f);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+gl.glBegin(GL.GL_TRIANGLE_FAN);
+gl.glNormal3f(0.0f,0.0f,1.0f);
+gl.glVertex3f(0.0f, 0.0f, 0.0f); //srodek kola
+for(kat = 2.0f*(float)Math.PI; kat > 0.0f; kat -= (Math.PI/32.0f))
+{
+x = (float)Math.sin(kat);
+y = (float)Math.cos(kat);
+gl.glVertex3f(x, y, 0.0f);
+}
+gl.glEnd();
+}
+
     private float[] WyznaczNormalna(float[] punkty, int ind1, int ind2, int ind3)
 {
  float[] norm = new float[3];
