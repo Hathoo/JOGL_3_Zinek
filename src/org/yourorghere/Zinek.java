@@ -26,6 +26,8 @@ import javax.media.opengl.glu.GLU;
  * This version is equal to Brian Paul's version 1.2 1999/10/21
  */
 public class Zinek implements GLEventListener {
+   static Koparka koparka;
+   int i=0;
  private static float xrot = 0.0f, yrot = 0.0f;
  public static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczajšce
 public static float diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
@@ -92,6 +94,31 @@ if(e.getKeyChar() == 'e')
     lightPos = new float[]{lightPos[0]-0.1f, lightPos[0]-0.1f, lightPos[0]-0.1f};
 if(e.getKeyChar() == 'r')
     lightPos = new float[]{lightPos[0]+0.1f, lightPos[0]+0.1f, lightPos[0]+0.1f};
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD1)
+    if(koparka.boki<0.0f&&koparka.boki>=-90.0f)
+        koparka.boki+=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD2)
+    if(koparka.boki<=0.0f&&koparka.boki>-90.0f)
+        koparka.boki-=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD4)
+    if(koparka.jeden<53.0f&&koparka.jeden>=-35.0f)
+ koparka.jeden+=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD5)
+    if(koparka.jeden<=53.0f&&koparka.jeden>-35.0f)
+ koparka.jeden-=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD7)
+    if(koparka.dwa<45.0f&&koparka.dwa>=-100.0f)
+ koparka.dwa+=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD8)
+    if(koparka.dwa<=45.0f&&koparka.dwa>-100.0f)
+ koparka.dwa-=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD6)
+    if(koparka.trzy<25.0f&&koparka.trzy>=-120.0f)
+ koparka.trzy+=1.0f;
+if(e.getKeyCode() == KeyEvent.VK_NUMPAD9)
+    if(koparka.trzy<=25.0f&&koparka.trzy>-120.0f)
+ koparka.trzy-=1.0f;
+
  }
  public void keyReleased(KeyEvent e){}
  public void keyTyped(KeyEvent e){}
@@ -106,7 +133,7 @@ if(e.getKeyChar() == 'r')
     public void init(GLAutoDrawable drawable) {
         // Use debug pipeline
         // drawable.setGL(new DebugGL(drawable.getGL()));
-
+        koparka = new Koparka();
         GL gl = drawable.getGL();
         System.err.println("INIT GL IS: " + gl.getClass().getName());
 
@@ -161,8 +188,8 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         gl.glViewport(0, 0, width, height);
         gl.glMatrixMode(GL.GL_PROJECTION);
         gl.glLoadIdentity();
-        glu.gluPerspective(45.0f, h, 1.0, 200.0);
-        gl.glViewport(200, 200, 100, 100);
+        glu.gluPerspective(100.0f, h, 1.0, 200.0);
+       // gl.glViewport(200, 200, 100, 100);
 
            /*     float ilor;
 if(width<=height)
@@ -540,7 +567,7 @@ gl.glEnd();
  //Wykonanie wszystkich operacji znajduj¹cych siê w buforze
  
 
-
+/*choinki\/
 gl.glRotatef(90f, 1, 0, 0);
 for(int iiii=0;iiii<10;iiii++)
 {
@@ -583,8 +610,43 @@ gl.glScalef(0.3f, 0.3f, 0.6f);
 walec(gl);
  gl.glPopMatrix();
  gl.glEnd();
+}*/
+
+gl.glScalef(2,2,2);
+koparka.Rysuj(gl);
+
+ if(koparka.trzy<-70.0f&&i==0)
+ {     
+     
+     i=1;
+ }
+ if(koparka.trzy>=23.0f&&i==1)
+ {     
+     
+     i=0;
+ }
+if(koparka.jeden>-15.0f&&i==0)
+{
+    koparka.jeden-=0.1f;
+    
 }
- 
+if(koparka.jeden<=-5.0f&&i==0&&koparka.dwa>-70.0f)
+    {
+        koparka.dwa-=0.1f;
+    }
+ if(koparka.dwa<=-55.0f&&i==0&&koparka.trzy>-70.0f)
+    {
+        koparka.trzy-=0.1f;
+        System.out.println(koparka.trzy);
+    }
+
+ if(koparka.jeden<65.0f&&i==1)
+{
+    koparka.jeden+=0.1f;
+    
+}
+ if(koparka.jeden>40&&i==1&&koparka.trzy<25.0f)
+     koparka.trzy+=0.1f;
 gl.glFlush();
 }
 
