@@ -381,6 +381,7 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 
 gl.glEnd();*/
 //ostroslup\/
+/*
 gl.glScalef(4, 4, 4);
 gl.glBegin(GL.GL_QUADS);
 gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
@@ -455,28 +456,32 @@ gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glTexCoord2f(0,0);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 gl.glEnd();
-
+*/
  
 //walec\/
-/*
+
 float x,y,kat;
+gl.glScalef(4, 4, 4);
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
 gl.glBegin(GL.GL_QUAD_STRIP);
 //gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
-gl.glColor3f(1.0f,1.0f,0.0f);
+
 for(kat = 0.0f; kat < (2.0f*Math.PI);
 kat+=(Math.PI/32.0f))
 {
 x = 1.0f*(float)Math.sin(kat);
 y = 1.0f*(float)Math.cos(kat);
 gl.glNormal3f(x,y,0f);
+gl.glTexCoord2f(kat/6,0);
 gl.glVertex3f(x, 2.0f, y);
+gl.glTexCoord2f(kat/6,1);
 gl.glVertex3f(x, -2.0f, y);//kolejne punkty
 }
 gl.glEnd();
 
 float xx,yy,katt;
 gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glColor3f(1.0f,0.0f,0.0f);
+
 gl.glVertex3f(0.0f,2.0f,0.0f); //œrodek
 for(katt = 0.0f; katt < (2.0f*Math.PI);
 katt+=(Math.PI/32.0f))
@@ -490,7 +495,7 @@ gl.glEnd();
 
 float xxx,yyy,kattt;
 gl.glBegin(GL.GL_TRIANGLE_FAN);
-gl.glColor3f(0.0f,1.0f,0.0f);
+
 gl.glVertex3f(0.0f,-2.0f,0.0f); //œrodek
 for(kattt = (float) (2.0f*Math.PI); kattt > 0.0f;
 kattt-=(Math.PI/32.0f))
@@ -503,7 +508,7 @@ gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 gl.glEnd();
 
 
-
+/*
 gl.glBegin(GL.GL_QUAD_STRIP);
 //gl.glVertex3f(0.0f,0.0f,-6.0f); //œrodek
 gl.glColor3f(1.0f,1.0f,0.0f);
