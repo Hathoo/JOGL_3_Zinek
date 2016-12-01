@@ -394,47 +394,65 @@ gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glTexCoord2f(1,1);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glEnd();
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
 gl.glBegin(GL.GL_TRIANGLES);
-gl.glColor3f(1.0f,0.0f,0.0f);
+
 float[] scianka1={-1.0f, -1.0f, 1.0f, //wpó³rzêdne pierwszego punktu
                     1.0f, -1.0f, 1.0f, //wspó³rzêdne drugiego punktu
  0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
 float[] normalna1 = WyznaczNormalna(scianka1,0,3,6);
 gl.glNormal3fv(normalna1,0);
+gl.glTexCoord2f(0,1);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(1,1);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(0,0);
 gl.glVertex3f(0.0f,1.0f,0.0f);
+gl.glEnd();
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+gl.glBegin(GL.GL_TRIANGLES);
 
-gl.glColor3f(0.0f,1.0f,0.0f);
 float[] scianka2={1.0f, -1.0f, -1.0f, //wpó³rzêdne pierwszego punktu
                     -1.0f, -1.0f, -1.0f, //wspó³rzêdne drugiego punktu
                     0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
 float[] normalna2 = WyznaczNormalna(scianka1,0,3,6);
 gl.glNormal3fv(normalna2,0);
+gl.glTexCoord2f(0,1);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(1,1);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(0,0);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 
-gl.glColor3f(0.0f,0.0f,1.0f);
+gl.glEnd();
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+gl.glBegin(GL.GL_TRIANGLES);
 float[] scianka3={-1.0f, -1.0f, -1.0f, //wpó³rzêdne pierwszego punktu
                     -1.0f, -1.0f, 1.0f, //wspó³rzêdne drugiego punktu
                     0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
 float[] normalna3 = WyznaczNormalna(scianka1,0,3,6);
 gl.glNormal3fv(normalna3,0);
+gl.glTexCoord2f(0,1);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(1,1);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(0,0);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 
 
-
-gl.glColor3f(1.0f,1.0f,0.0f);
+gl.glEnd();
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+gl.glBegin(GL.GL_TRIANGLES);
 float[] scianka4={1.0f, -1.0f, 1.0f, //wpó³rzêdne pierwszego punktu
                     1.0f, -1.0f, -1.0f, //wspó³rzêdne drugiego punktu
                     0.0f, 1.0f, 0.0f}; //wspó³rzêdne trzeciego punktu
 float[] normalna4 = WyznaczNormalna(scianka1,0,3,6);
 gl.glNormal3fv(normalna4,0);
+gl.glTexCoord2f(0,1);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(1,1);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(0,0);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 gl.glEnd();
 
