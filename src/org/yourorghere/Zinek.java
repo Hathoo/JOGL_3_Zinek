@@ -8,6 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.Random;
 import java.util.Scanner;
+import javax.imageio.ImageIO;
 import javax.media.opengl.GL;
 import static javax.media.opengl.GL.GL_FRONT;
 import static javax.media.opengl.GL.GL_SHININESS;
@@ -16,7 +17,11 @@ import javax.media.opengl.GLAutoDrawable;
 import javax.media.opengl.GLCanvas;
 import javax.media.opengl.GLEventListener;
 import javax.media.opengl.glu.GLU;
-
+import com.sun.opengl.util.texture.Texture;
+import com.sun.opengl.util.texture.TextureIO;
+import java.io.File;
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
 
 
 /**
@@ -28,6 +33,9 @@ import javax.media.opengl.glu.GLU;
 public class Zinek implements GLEventListener {
    static Koparka koparka;
    int i=0;
+   static BufferedImage image1 = null,image2 = null;
+static Texture t1 = null, t2 = null;
+
  private static float xrot = 0.0f, yrot = 0.0f;
  public static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczajšce
 public static float diffuseLight[] = { 0.7f, 0.7f, 0.7f, 1.0f };//?wiat?o rozproszone
@@ -174,6 +182,26 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         
         gl.glMateriali(GL.GL_FRONT,GL.GL_SHININESS,128);
         gl.glEnable(GL.GL_DEPTH_TEST);
+        try
+        {
+            image1=ImageIO.read(getClass().getResourceAsStream("/pokemon.jpg"));
+            image2=ImageIO.read(getClass().getResourceAsStream("/android.jpg"));
+        }
+        catch (Exception ex)
+        {
+            return;
+        }
+        t1 = TextureIO.newTexture(image1, false);
+t2 = TextureIO.newTexture(image2, false);
+gl.glTexEnvi(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE,
+ GL.GL_BLEND | GL.GL_MODULATE);
+gl.glEnable(GL.GL_TEXTURE_2D);
+gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_S, GL.GL_REPEAT);
+gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_WRAP_T, GL.GL_REPEAT);
+gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MAG_FILTER, GL.GL_NEAREST);
+gl.glTexParameteri(GL.GL_TEXTURE_2D, GL.GL_TEXTURE_MIN_FILTER, GL.GL_NEAREST);
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+
     }
 
     public void reshape(GLAutoDrawable drawable, int x, int y, int width, int height) {
@@ -281,53 +309,70 @@ gl.glEnd();*/
  }*/
 /*
 //szescian\/
+    gl.glScalef(4, 4, 4);
+    gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
  gl.glBegin(GL.GL_QUADS);
 //œciana górna
- gl.glColor3f(0.0f, 1.0f, 0.0f);   
+    
  gl.glNormal3f(0.0f,1.0f,0.0f);
+    gl.glTexCoord2f(1,1);
       gl.glVertex3f( 1.0f, 1.0f, -1.0f);
+      gl.glTexCoord2f(0,1);
       gl.glVertex3f(-1.0f, 1.0f, -1.0f);
+      gl.glTexCoord2f(0,0);
       gl.glVertex3f(-1.0f, 1.0f,  1.0f);
+      gl.glTexCoord2f(1,0);
       gl.glVertex3f( 1.0f, 1.0f,  1.0f);
-      
+     gl.glEnd(); 
       
       
       //sciana przednia
- gl.glColor3f(0.0f, 1.0f, 0.0f); 
+     gl.glBindTexture(GL.GL_TEXTURE_2D, t2.getTextureObject());
+ gl.glBegin(GL.GL_QUADS);
  gl.glNormal3f(0.0f,0.0f,1.0f);
+ gl.glTexCoord2f(2,2);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(0,2);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(0,0);
 gl.glVertex3f(1.0f,1.0f,1.0f);
+gl.glTexCoord2f(2,0);
 gl.glVertex3f(-1.0f,1.0f,1.0f);
-
+ gl.glEnd(); 
 //sciana tylnia
- gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
+ gl.glBegin(GL.GL_QUADS);
  gl.glNormal3f(0.0f,0.0f,1.0f);
+ gl.glTexCoord2f(0,0);
 gl.glVertex3f(-1.0f,1.0f,-1.0f);
+gl.glTexCoord2f(2,0);
 gl.glVertex3f(1.0f,1.0f,-1.0f);
+gl.glTexCoord2f(2,2);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(0,2);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glEnd();
 
 //œciana lewa
- gl.glColor3f(0.0f, 1.0f, 0.0f); 
+  gl.glBegin(GL.GL_QUADS);
  gl.glNormal3f(1.0f,0.0f,0.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(-1.0f,1.0f,1.0f);
 gl.glVertex3f(-1.0f,1.0f,-1.0f);
-
+gl.glEnd();
 
 
 //œciana prawa
- gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glBegin(GL.GL_QUADS);
  gl.glNormal3f(1.0f,0.0f,0.0f);
 gl.glVertex3f(1.0f,1.0f,-1.0f);
 gl.glVertex3f(1.0f,1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
-
+gl.glEnd();
 //œciana dolna
- gl.glColor3f(0.0f, 1.0f, 0.0f); 
+ gl.glBegin(GL.GL_QUADS);
  gl.glNormal3f(0.0f,1.0f,0.0f);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
@@ -336,12 +381,17 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 
 gl.glEnd();*/
 //ostroslup\/
-/*gl.glBegin(GL.GL_QUADS);
-gl.glColor3f(1.0f,0.0f,1.0f);
+gl.glScalef(4, 4, 4);
+gl.glBegin(GL.GL_QUADS);
+gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
 gl.glNormal3f(0.0f,1.0f,0.0f);
+gl.glTexCoord2f(0,1);
 gl.glVertex3f(-1.0f,-1.0f,1.0f);
+gl.glTexCoord2f(0,0);
 gl.glVertex3f(-1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(1,0);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
+gl.glTexCoord2f(1,1);
 gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glEnd();
 gl.glBegin(GL.GL_TRIANGLES);
@@ -387,7 +437,7 @@ gl.glVertex3f(1.0f,-1.0f,1.0f);
 gl.glVertex3f(1.0f,-1.0f,-1.0f);
 gl.glVertex3f(0.0f,1.0f,0.0f);
 gl.glEnd();
-*/
+
  
 //walec\/
 /*
@@ -612,7 +662,8 @@ walec(gl);
  gl.glEnd();
 }*/
 
-gl.glScalef(2,2,2);
+/* koparka\/
+        gl.glScalef(2,2,2);
 koparka.Rysuj(gl);
 
  if(koparka.trzy<-70.0f&&i==0)
@@ -647,6 +698,7 @@ if(koparka.jeden<=-5.0f&&i==0&&koparka.dwa>-70.0f)
 }
  if(koparka.jeden>40&&i==1&&koparka.trzy<25.0f)
      koparka.trzy+=0.1f;
+        */
 gl.glFlush();
 }
 
