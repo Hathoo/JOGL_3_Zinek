@@ -32,9 +32,11 @@ import javax.imageio.ImageIO;
  */
 public class Zinek implements GLEventListener {
    static Koparka koparka;
+   static Scena scena;
    int i=0;
-   static BufferedImage image1 = null,image2 = null;
-static Texture t1 = null, t2 = null;
+   static float uuu=0;
+   static BufferedImage image1 = null,image2 = null, image3=null;
+static Texture t1 = null, t2 = null,t3=null;
 
  private static float xrot = 0.0f, yrot = 0.0f;
  public static float ambientLight[] = { 0.3f, 0.3f, 0.3f, 1.0f };//swiat?o otaczajšce
@@ -79,13 +81,19 @@ s=sc.nextFloat();*/
  public void keyPressed(KeyEvent e)
  {
  if(e.getKeyCode() == KeyEvent.VK_UP)
- xrot -= 1.0f;
+ {uuu=0;
+ scena.Przesun(uuu+=0.7f);
+ }
  if(e.getKeyCode() == KeyEvent.VK_DOWN)
- xrot +=1.0f;
+ {uuu=0;
+ scena.Przesun(uuu-=0.7f);
+ }
  if(e.getKeyCode() == KeyEvent.VK_RIGHT)
- yrot += 1.0f;
+ 
+ scena.kat+=1.0f;
  if(e.getKeyCode() == KeyEvent.VK_LEFT)
- yrot -=1.0f;
+ scena.kat-=1.0f;
+ 
 if(e.getKeyChar() == 'q')
     ambientLight = new float[]{ambientLight[0]+0.1f, ambientLight[0]+0.1f, ambientLight[0]+0.1f,1.0f};
 if(e.getKeyChar() == 'w')
@@ -142,6 +150,7 @@ if(e.getKeyCode() == KeyEvent.VK_NUMPAD9)
         // Use debug pipeline
         // drawable.setGL(new DebugGL(drawable.getGL()));
         koparka = new Koparka();
+        scena = new Scena();
         GL gl = drawable.getGL();
         System.err.println("INIT GL IS: " + gl.getClass().getName());
 
@@ -184,8 +193,11 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         gl.glEnable(GL.GL_DEPTH_TEST);
         try
         {
-            image1=ImageIO.read(getClass().getResourceAsStream("/pokemon.jpg"));
-            image2=ImageIO.read(getClass().getResourceAsStream("/android.jpg"));
+            
+            image1=ImageIO.read(getClass().getResourceAsStream("/bok.jpg"));
+           image2=ImageIO.read(getClass().getResourceAsStream("/niebo.jpg"));
+            image3=ImageIO.read(getClass().getResourceAsStream("/trawa.jpg"));
+            
         }
         catch (Exception ex)
         {
@@ -193,6 +205,7 @@ float specref[] = { 1.0f, 1.0f, 1.0f, 1.0f }; //parametry odblaskowo?ci
         }
         t1 = TextureIO.newTexture(image1, false);
 t2 = TextureIO.newTexture(image2, false);
+t3 = TextureIO.newTexture(image3, false);
 gl.glTexEnvi(GL.GL_TEXTURE_ENV, GL.GL_TEXTURE_ENV_MODE,
  GL.GL_BLEND | GL.GL_MODULATE);
 gl.glEnable(GL.GL_TEXTURE_2D);
@@ -459,7 +472,7 @@ gl.glEnd();
 */
  
 //walec\/
-
+/*
 float x,y,kat;
 gl.glScalef(4, 4, 4);
 gl.glBindTexture(GL.GL_TEXTURE_2D, t1.getTextureObject());
@@ -506,7 +519,7 @@ gl.glNormal3f(xxx,yyy,0f);
 gl.glVertex3f(xxx, -2.0f, yyy); //kolejne punkty
 }
 gl.glEnd();
-
+*/
 
 /*
 gl.glBegin(GL.GL_QUAD_STRIP);
@@ -722,6 +735,8 @@ if(koparka.jeden<=-5.0f&&i==0&&koparka.dwa>-70.0f)
  if(koparka.jeden>40&&i==1&&koparka.trzy<25.0f)
      koparka.trzy+=0.1f;
         */
+
+scena.Rysuj(gl,t1,t3,t2);
 gl.glFlush();
 }
 
