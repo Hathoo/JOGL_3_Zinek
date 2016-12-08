@@ -20,10 +20,26 @@ public class Koparka {
     float f;
     float g;
     float h;
+    float kat,x,z;
+    
+    void Przesun(float d)
+    {
+        x-=d*Math.sin(45+kat*(3.14f/180.0f));
+        z+=d*Math.cos(45+kat*(3.14f/180.0f));
+       
+
+    }
     
     public void Rysuj(GL gl)
     {
+        gl.glRotatef(90, 0, 1, 0);
+        gl.glRotatef(-Zinek.scena.kat, 0, 1, 0);
+        
+        
+     //if(z<57.0f&&z>-57.0f&&x<57.0f&&x>-57.0f)
+     //gl.glTranslatef(z, 0, x);
         //ciagnik
+        gl.glTranslatef(Zinek.scena.z*0.5f, 0, Zinek.scena.x*0.5f);
         gl.glColor3f(1.0f,1.0f,0.0f);
         Prostopadloscian(gl,-2.0f,-1.0f,-1.0f,4.0f,1.0f,2.0f);
         gl.glColor3f(0.15f,0.15f,0.15f);
