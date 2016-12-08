@@ -81,15 +81,20 @@ s=sc.nextFloat();*/
  public void keyPressed(KeyEvent e)
  {
  if(e.getKeyCode() == KeyEvent.VK_UP)
- {if(scena.z<57.0f){
+ {if(scena.z+0.7f<57.0f&&scena.z-0.7f>-57.0f&&scena.x+0.7f<57.0f&&scena.x-0.7f>-57.0f){
      uuu=0;
  scena.Przesun(uuu+=0.7f);
  }
+ else
+   scena.Przesun(uuu-=0.9f);  
+ }
  if(e.getKeyCode() == KeyEvent.VK_DOWN)
- {if(scena.z>-57.0f){
+ {if(scena.z-0.7f>-57.0f&&scena.z+0.7f<57.0f&&scena.x-0.7f>-57.0f&&scena.x+0.7f<57.0f){
      uuu=0;
  scena.Przesun(uuu-=0.7f);
  }
+ else
+     scena.Przesun(uuu+=0.9f);
  }
  if(e.getKeyCode() == KeyEvent.VK_RIGHT)
  
