@@ -81,12 +81,15 @@ s=sc.nextFloat();*/
  public void keyPressed(KeyEvent e)
  {
  if(e.getKeyCode() == KeyEvent.VK_UP)
- {uuu=0;
+ {if(scena.z<57.0f){
+     uuu=0;
  scena.Przesun(uuu+=0.7f);
  }
  if(e.getKeyCode() == KeyEvent.VK_DOWN)
- {uuu=0;
+ {if(scena.z>-57.0f){
+     uuu=0;
  scena.Przesun(uuu-=0.7f);
+ }
  }
  if(e.getKeyCode() == KeyEvent.VK_RIGHT)
  

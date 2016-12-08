@@ -14,8 +14,18 @@ import javax.media.opengl.GL;
  * @author student
  */
 public class Scena {
+    float x,z,kat;
+    void Przesun(float d)
+    {
+        x-=d*Math.sin(kat*(3.14f/180.0f));
+        z+=d*Math.cos(kat*(3.14f/180.0f));
+        System.out.println(z);
+
+    }
     void Rysuj(GL gl, Texture t1, Texture t2, Texture t3)
  {
+     gl.glRotatef(kat, 0, 1, 0);
+     gl.glTranslatef(x, 0, z);
 //szescian
 gl.glColor3f(1.0f,1.0f,1.0f);
 //za³adowanie tekstury wczytanej wczeœniej z pliku krajobraz.bmp
